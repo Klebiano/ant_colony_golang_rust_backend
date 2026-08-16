@@ -4,13 +4,22 @@ High-performance Go and Rust microservices for optimizing offshore wind farm tur
 
 ---
 
+## 🖥️ Frontend Integration
+
+This backend seamlessly pairs with the official interactive frontend dashboard:
+- **Repository**: [wind_turbines_route_optimization_dashboard](https://github.com/Klebiano/wind_turbines_route_optimization_dashboard)
+- **Features**: Interactive Leaflet turbine map visualization, maintenance route rendering, real-time subsystem failure simulation, and algorithmic performance comparison (ACO vs GA vs Memetic).
+- **Connection**: Fully CORS-enabled to connect directly to `http://localhost:8080` (Go), `http://localhost:8082` (Rust), or `http://localhost:8000` (Python FastAPI).
+
+---
+
 ## ✨ Features
 
 - ⚡ **Ultra-High Performance & Low Latency**: Compiled Go and Rust implementations delivering sub-millisecond to low-millisecond route optimization.
 - 🛸 **Bio-Inspired Metaheuristics**: Implements **Ant Colony Optimization (ACO)**, **Genetic Algorithm (GA)**, and **Memetic Algorithm (GA + 2-opt local search)** across Python, Go, and Rust with full algorithmic parity.
 - 🗺️ **Geographical Route Normalization**: Computes optimal navigation paths starting and ending at the dock (`Doca`), applying Min-Max scaling to turbine coordinates and downtime costs.
 - 🗄️ **Shared SQLite Storage & Datasets**: Common SQLite schema and seed datasets located in root `database/` (`database.sql`, `wind_farm_map_points.csv`, `subsystem.csv`, `downtime.csv`).
-- 🌐 **REST API & CORS Enabled**: Standardized HTTP endpoints with cross-origin resource sharing middleware for easy integration with web dashboards (React, Vite, Next.js).
+- 🌐 **REST API & CORS Enabled**: Standardized HTTP endpoints with cross-origin resource sharing middleware for easy integration with the [Web Dashboard](https://github.com/Klebiano/wind_turbines_route_optimization_dashboard).
 - 🔬 **Comprehensive 3-Way Benchmarks**: End-to-end benchmarking suite comparing Python FastAPI, Go, and Rust backends.
 
 ---
@@ -21,6 +30,7 @@ High-performance Go and Rust microservices for optimizing offshore wind farm tur
   - **Go (`/go`)**: Standard Library `net/http`, custom CORS middleware, `database/sql`, [`github.com/mattn/go-sqlite3`](https://github.com/mattn/go-sqlite3), `math/rand/v2`
   - **Rust (`/rust`)**: `axum 0.8`, `tokio 1.x`, `tower-http 0.6` (CORS), `rusqlite 0.33`, `serde`, `rand 0.8`
   - **Python 3.12+**: FastAPI, Uvicorn, NumPy, Pandas, SQLAlchemy (reference backend)
+- **Frontend Ecosystem**: [wind_turbines_route_optimization_dashboard](https://github.com/Klebiano/wind_turbines_route_optimization_dashboard) (React, Vite, Leaflet, TailwindCSS)
 - **Database & Storage**: SQLite (`sql_app.db`), seeded via `database/database.sql`
 - **Data Serialization**: JSON (`encoding/json`, `serde_json`), CSV (`encoding/csv`, `csv`)
 - **Testing & Benchmarking**: Go `testing` package, Rust `cargo test`, Python comparative runner (`tests/compare_backends.py`)
@@ -131,7 +141,7 @@ cargo test --release --manifest-path rust/Cargo.toml --test benchmarks_test -- -
 
 ## 📡 API Reference & Endpoints
 
-Both Go (port `8080`) and Rust (port `8082` / `8080`) expose identical REST endpoints:
+Both Go (port `8080`) and Rust (port `8082` / `8080`) expose identical REST endpoints consumed by the [Frontend Dashboard](https://github.com/Klebiano/wind_turbines_route_optimization_dashboard):
 
 ### 1. `GET /ant-colony/get-turbines-map`
 Fetches all wind farm turbines and geographical coordinates from the SQLite database.

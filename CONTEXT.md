@@ -7,8 +7,9 @@ This document serves as the primary technical reference and architectural bluepr
 ## 1. Project Overview
 
 * **Purpose**: Ultra-high-performance Go and Rust microservices designed for optimizing offshore wind farm turbine maintenance routing. Replicated from the original Python FastAPI backend, they compute optimal navigation routes using bio-inspired metaheuristic algorithms (Ant Colony Optimization, Genetic Algorithms, and Memetic Algorithms), balancing travel distance against turbine fault downtime costs.
+* **Frontend Ecosystem**: Integrated with the interactive web visualization dashboard: [wind_turbines_route_optimization_dashboard](https://github.com/Klebiano/wind_turbines_route_optimization_dashboard) (React / Vite / TailwindCSS / Leaflet).
 * **Target Audience**: Operational planners, wind farm maintenance engineers, and researchers needing sub-millisecond route optimization and scheduling.
-* **Context**: Developed as part of an offshore wind farm maintenance research project (TCC) to evaluate language execution speeds (Python vs Go vs Rust) and provide a production-ready API for web dashboards (e.g., React / Vite / Next.js).
+* **Context**: Developed as part of an offshore wind farm maintenance research project (TCC) to evaluate language execution speeds (Python vs Go vs Rust) and provide a production-ready API for the [web dashboard](https://github.com/Klebiano/wind_turbines_route_optimization_dashboard).
 
 ---
 
@@ -25,6 +26,7 @@ This document serves as the primary technical reference and architectural bluepr
   * Database: SQLite (`rusqlite 0.33` with bundled sqlite3)
   * Serialization: `serde`, `serde_json`, `csv`
 * **Python 3.12+**: FastAPI, Uvicorn, NumPy, Pandas, SQLAlchemy (reference implementation)
+* **Frontend Dashboard**: [wind_turbines_route_optimization_dashboard](https://github.com/Klebiano/wind_turbines_route_optimization_dashboard) (React, Vite, Leaflet)
 
 ---
 
@@ -53,7 +55,7 @@ ant_colony_golang_rust_backend/
 │   ├── tests/                  # Go benchmark suites
 │   │   └── benchmarks_test.go  # Go benchmark test suite (testing.B)
 │   ├── go.mod                  # Go module definition
-│   ├── go.sum                  # Go dependency checksums
+│   ├── go.sum                  # Dependency checksums
 │   └── main.go                 # Go server entrypoint (port 8080)
 ├── rust/                       # Rust microservice backend
 │   ├── Cargo.toml              # Rust crate manifest & dependencies
