@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"path/filepath"
 	"runtime"
 	"testing"
@@ -15,7 +16,15 @@ import (
 
 func setupTestDB(t *testing.T) (*AntColonyHandler, string) {
 	_, filename, _, _ := runtime.Caller(0)
-	baseDir := filepath.Dir(filepath.Dir(filename))
+	dir := filepath.Dir(filename)
+	baseDir := dir
+	for i := 0; i < 4; i++ {
+		if _, err := os.Stat(filepath.Join(dir, "database", "database.sql")); err == nil {
+			baseDir = dir
+			break
+		}
+		dir = filepath.Dir(dir)
+	}
 
 	sqlPath := filepath.Join(baseDir, "database", "database.sql")
 	db, err := database.InitDB(":memory:", sqlPath)

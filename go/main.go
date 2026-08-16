@@ -30,8 +30,16 @@ func main() {
 		log.Fatalf("Failed to get working directory: %v", err)
 	}
 
-	dbPath := filepath.Join(execDir, "sql_app.db")
-	sqlPath := filepath.Join(execDir, "database", "database.sql")
+	baseDir := execDir
+	if _, err := os.Stat(filepath.Join(baseDir, "database", "database.sql")); os.IsNotExist(err) {
+		parent := filepath.Dir(baseDir)
+		if _, err := os.Stat(filepath.Join(parent, "database", "database.sql")); err == nil {
+			baseDir = parent
+		}
+	}
+
+	dbPath := filepath.Join(baseDir, "sql_app.db")
+	sqlPath := filepath.Join(baseDir, "database", "database.sql")
 
 	db, err := database.InitDB(dbPath, sqlPath)
 	if err != nil {
@@ -39,7 +47,7 @@ func main() {
 	}
 	defer db.Close()
 
-	acHandler := handlers.NewAntColonyHandler(db, execDir)
+	acHandler := handlers.NewAntColonyHandler(db, baseDir)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /ant-colony/get-turbines-map", acHandler.GetTurbinesMap)

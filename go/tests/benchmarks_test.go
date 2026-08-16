@@ -18,7 +18,15 @@ import (
 
 func loadCSVPoints(problemFile string) ([]models.TurbineFaultPoint, error) {
 	_, filename, _, _ := runtime.Caller(0)
-	baseDir := filepath.Dir(filepath.Dir(filename))
+	dir := filepath.Dir(filename)
+	baseDir := dir
+	for i := 0; i < 4; i++ {
+		if _, err := os.Stat(filepath.Join(dir, "tests", "inputs", problemFile)); err == nil {
+			baseDir = dir
+			break
+		}
+		dir = filepath.Dir(dir)
+	}
 	path := filepath.Join(baseDir, "tests", "inputs", problemFile)
 
 	file, err := os.Open(path)
