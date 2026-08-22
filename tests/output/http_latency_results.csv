@@ -1,0 +1,6 @@
+Endpoint,FastAPI (Python),Golang Backend,Rust Backend
+GET /ant-colony/get-turbines-map,2.56,3.04,0.95
+GET /ant-colony/get-subsystems,1.43,0.92,0.8
+POST /run-route-optimizer (ACO),59.64,4.3,1.55
+POST /run-route-optimizer (Genetic),78.91,14.31,2.14
+POST /run-route-optimizer (Memetic),24.13,4.99,1.09

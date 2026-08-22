@@ -17,6 +17,8 @@ fn test_print_speed_benchmark_results() {
         "problem_15_turbines.csv",
         "problem_20_turbines.csv",
         "problem_40_turbines.csv",
+        "problem_100_turbines.csv",
+        "problem_200_turbines.csv",
     ];
 
     println!("\n=================================================================");
@@ -33,16 +35,18 @@ fn test_print_speed_benchmark_results() {
         let n_turbines = pts.len() - 1;
 
         // ACO
-        let (n_ants, alpha, beta, rho) = if n_turbines <= 10 {
-            (3, 5.0, 1.5, 0.5)
+        let (n_ants, alpha, beta, rho, n_iter) = if n_turbines <= 10 {
+            (3, 5.0, 1.5, 0.5, 200)
+        } else if n_turbines <= 40 {
+            (8, 5.0, 2.0, 0.5, 200)
         } else {
-            (8, 5.0, 2.0, 0.5)
+            (10, 5.0, 2.0, 0.5, 100)
         };
 
         let t0 = Instant::now();
         for i in 0..5 {
             let mut rng = StdRng::seed_from_u64(i as u64);
-            let mut aco = AntColony::new(pts.clone(), n_ants, 200, alpha, beta, rho, 100.0);
+            let mut aco = AntColony::new(pts.clone(), n_ants, n_iter, alpha, beta, rho, 100.0);
             aco.optimize(&mut rng);
         }
         let aco_ms = (t0.elapsed().as_secs_f64() * 1000.0) / 5.0;
@@ -63,8 +67,10 @@ fn test_print_speed_benchmark_results() {
         let ga_ms = (t1.elapsed().as_secs_f64() * 1000.0) / 5.0;
 
         // Memetic
-        let (mut_rate_m, pop_size_m, n_gen_m) = if n_turbines >= 40 {
-            (0.1, 150, 50)
+        let (mut_rate_m, pop_size_m, n_gen_m) = if n_turbines >= 100 {
+            (0.1, 60, 20)
+        } else if n_turbines >= 40 {
+            (0.1, 80, 30)
         } else {
             (0.2, 50, 10)
         };

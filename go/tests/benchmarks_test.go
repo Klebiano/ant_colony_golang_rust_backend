@@ -187,6 +187,8 @@ func TestPrintSpeedBenchmarkResults(t *testing.T) {
 		"problem_15_turbines.csv",
 		"problem_20_turbines.csv",
 		"problem_40_turbines.csv",
+		"problem_100_turbines.csv",
+		"problem_200_turbines.csv",
 	}
 
 	fmt.Println("=================================================================")
@@ -205,19 +207,27 @@ func TestPrintSpeedBenchmarkResults(t *testing.T) {
 		// ACO
 		var nAnts int
 		var alpha, beta float64
+		var nIter int
 		if nTurbines <= 10 {
 			nAnts = 3
 			alpha = 5.0
 			beta = 1.5
-		} else {
+			nIter = 200
+		} else if nTurbines <= 40 {
 			nAnts = 8
 			alpha = 5.0
 			beta = 2.0
+			nIter = 200
+		} else {
+			nAnts = 10
+			alpha = 5.0
+			beta = 2.0
+			nIter = 100
 		}
 		t0 := time.Now()
 		for i := 0; i < 5; i++ {
 			rng := rand.New(rand.NewPCG(uint64(i), 0))
-			aco := algorithms.NewAntColony(pts, nAnts, 200, alpha, beta, 0.5, 100.0, rng)
+			aco := algorithms.NewAntColony(pts, nAnts, nIter, alpha, beta, 0.5, 100.0, rng)
 			aco.Optimize()
 		}
 		acoMs := float64(time.Since(t0).Milliseconds()) / 5.0
@@ -243,10 +253,14 @@ func TestPrintSpeedBenchmarkResults(t *testing.T) {
 		gaMs := float64(time.Since(t1).Milliseconds()) / 5.0
 
 		// Memetic
-		if nTurbines >= 40 {
+		if nTurbines >= 100 {
 			mutRate = 0.1
-			popSize = 150
-			nGen = 50
+			popSize = 60
+			nGen = 20
+		} else if nTurbines >= 40 {
+			mutRate = 0.1
+			popSize = 80
+			nGen = 30
 		} else {
 			mutRate = 0.2
 			popSize = 50

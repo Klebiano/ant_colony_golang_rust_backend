@@ -1,0 +1,8 @@
+Dataset,CBC Opt Cost,CBC Status,ACO Best Cost,ACO Gap (%),GA Best Cost,GA Gap (%),Memetic Best Cost,Memetic Gap (%)
+5 Turbines,4.6051,Optimal,5.3075,+15.25%,4.6051,-0.00%,4.6051,-0.00%
+10 Turbines,4.6829,Optimal,6.3228,+35.02%,4.6829,+0.00%,4.6829,+0.00%
+15 Turbines,5.2777,Optimal,6.1859,+17.21%,5.5661,+5.46%,5.2777,-0.00%
+20 Turbines,4.5845,Optimal,4.9316,+7.57%,4.8494,+5.78%,4.5845,+0.00%
+40 Turbines,7.7192,Optimal,9.3871,+21.61%,11.9524,+54.84%,7.8813,+2.10%
+100 Turbines,9.4249,Optimal,12.1023,+28.41%,29.4083,+212.03%,30.9443,+228.32%
+200 Turbines,53.7324,Optimal,70.5153,+31.23%,101.6657,+89.21%,109.2915,+103.40%
